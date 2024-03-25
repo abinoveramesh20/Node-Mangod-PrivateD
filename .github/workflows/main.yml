@@ -21,9 +21,9 @@ jobs:
       - name: Deploy to private network via jump host
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.JUMP_HOST }}
+          username: ${{ secrets.JUMP_USERNAME }}
+          port: ${{ secrets.JUMP_PORT }}
+          key: ${{ secrets.JUMP_SSH_PRIVATE_KEY }}
           script: |
-            ssh -J ${{ secrets.USERNAME }}@${{ secrets.HOST }} ${{ secrets.PRIVATE_USERNAME }}@${{ secrets.PRIVATE_HOST }} -p ${{ secrets.PRIVATE_PORT }} -i ${{ secrets.PRIVATE_SSH_PRIVATE_KEY }} 'cd /var/www/html/Node-Mangod-PrivateD && git pull origin main && npm install && <additional commands>'
+            ssh -J ${{ secrets.JUMP_USERNAME }}@${{ secrets.JUMP_HOST }} ${{ secrets.PRIVATE_USERNAME }}@${{ secrets.PRIVATE_HOST }} -p ${{ secrets.PRIVATE_PORT }} -i ${{ secrets.PRIVATE_SSH_PRIVATE_KEY }} 'cd /path/to/your/app && git pull origin main && npm install && <additional commands>'
