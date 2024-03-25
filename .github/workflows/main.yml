@@ -1,4 +1,4 @@
-name: Deploy to Private Subnet
+name: Deploy to EC2 in Private Subnet
 
 on:
   push:
@@ -13,15 +13,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       
+    - name: Install SSH key
+      uses: appleboy/ssh-action@master
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY}}
+
     - name: Deploy to EC2
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.EC2_PRIVATE_IP }}
-        username: ubuntu
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY}}
         script: |
           cd /var/www/html/Node-Mangod-PrivateD
           git pull origin main
           npm install
-          npm run build
           pm2 restart Node-Mangod-PrivateD
