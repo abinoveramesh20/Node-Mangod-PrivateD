@@ -26,4 +26,4 @@ jobs:
           port: ${{ secrets.JUMP_PORT }} # SSH port for the public network server
           key: ${{ secrets.JUMP_SSH_PRIVATE_KEY }} # SSH private key for authentication
           script: |
-            ssh -i ${{ secrets.PRIVATE_SSH_PRIVATE_KEY }} -L ${{ secrets.JUMP_PORT }}:${{ secrets.PRIVATE_HOST }}:${{ secrets.PRIVATE_PORT }} ${{ secrets.PRIVATE_USERNAME }}@${{ secrets.PRIVATE_HOST }} -p ${{ secrets.PRIVATE_PORT }}
+            ssh -i ${{ secrets.PRIVATE_SSH_PRIVATE_KEY }} -L ${{ secrets.LOCAL_PORT }}:${{ secrets.PRIVATE_HOST }}:${{ secrets.PRIVATE_PORT }} ${{ secrets.PRIVATE_USERNAME }}@${{ secrets.PRIVATE_HOST }} -p ${{ secrets.PRIVATE_PORT }}
