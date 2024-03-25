@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 
 // Welcome message for root route
 app.get('/', (req, res) => {
-  res.send('Hello to the Todo App!');
+  res.send('Hi to the Todo App!');
 });
 
 // Routes
