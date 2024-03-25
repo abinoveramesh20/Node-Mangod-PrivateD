@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 
 // Welcome message for root route
 app.get('/', (req, res) => {
-  res.send('WE can do it! Yess WE can');
+  res.send('WE can do it!  WE can');
 });
 
 // Routes
