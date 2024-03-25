@@ -3,27 +3,26 @@ name: CICD
 on:
   push:
     branches:
-      - main
+      - main # or whatever your main branch name is
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
+    if: github.ref == 'refs/heads/main' 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       
       - name: Install dependencies
-        run: npm install
-
-      - name: Setup SSH tunnel
+        run: npm install 
+      - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.JUMP_HOST }} # Hostname or IP address of a server in the public network
-          username: ${{ secrets.JUMP_USERNAME }} # Username for SSH access
-          port: ${{ secrets.JUMP_PORT }} # SSH port for the public network server
-          key: ${{ secrets.JUMP_SSH_PRIVATE_KEY }} # SSH private key for authentication
+          host: ${{ secrets.JUMP_HOST }}
+          username: ${{ secrets.JUMP_USERNAME }}
+          port: ${{ secrets.JUMP_PORT }}
+          key: ${{ secrets.JUMP_SSH_PRIVATE_KEY }}
           script: |
-            ssh -i ${{ secrets.PRIVATE_SSH_PRIVATE_KEY }} -L ${{ secrets.LOCAL_PORT }}:${{ secrets.PRIVATE_HOST }}:${{ secrets.PRIVATE_PORT }} ${{ secrets.PRIVATE_USERNAME }}@${{ secrets.PRIVATE_HOST }} -p ${{ secrets.PRIVATE_PORT }}
+            cd /var/www/html/Node-Mangod-PrivateD
+            git pull origin main
