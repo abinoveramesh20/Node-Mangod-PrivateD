@@ -24,7 +24,7 @@ jobs:
         key: ${{ secrets.BASTION_SSH_KEY }}
         port: 22 # SSH port of the bastion host
         scipt: |
-          cd /var/www/html/Node-Mangod-PrivateD && 
-          git pull origin main &&
-          npm install && 
+          cd /var/www/html/Node-Mangod-PrivateD 
+          git pull origin main 
+          npm install 
           npm start"
