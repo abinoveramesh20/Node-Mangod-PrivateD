@@ -26,4 +26,4 @@ jobs:
         args: -NL 22:${{ secrets.PRIVATE_SERVER_HOST }}:22
 
     - name: Deploy to Private Server
-      run: ssh -p 2222 ${{ secrets.PRIVATE_SERVER_USERNAME }}@localhost "cd /var/www/html/Node-Mangod-PrivateD && git pull origin main && npm install && npm start"
+      run: ssh -p 2222 ${{ secrets.EC2_USERNAME }}@localhost "cd /var/www/html/Node-Mangod-PrivateD && git pull origin main && npm install && npm start"
