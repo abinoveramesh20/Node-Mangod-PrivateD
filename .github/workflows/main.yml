@@ -18,12 +18,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Deploy to private network via jump host
+      - name: Setup SSH tunnel
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.JUMP_HOST }}
-          username: ${{ secrets.JUMP_USERNAME }}
-          port: ${{ secrets.JUMP_PORT }}
-          key: ${{ secrets.JUMP_SSH_PRIVATE_KEY }}
+          host: ${{ secrets.JUMP_HOST }} # Hostname or IP address of a server in the public network
+          username: ${{ secrets.JUMP_USERNAME }} # Username for SSH access
+          port: ${{ secrets.JUMP_PORT }} # SSH port for the public network server
+          key: ${{ secrets.JUMP_SSH_PRIVATE_KEY }} # SSH private key for authentication
           script: |
-            ssh -J ${{ secrets.JUMP_USERNAME }}@${{ secrets.JUMP_HOST }} ${{ secrets.PRIVATE_USERNAME }}@${{ secrets.PRIVATE_HOST }} -p ${{ secrets.PRIVATE_PORT }} -i ${{ secrets.PRIVATE_SSH_PRIVATE_KEY }} 'cd /path/to/your/app && git pull origin main && npm install && <additional commands>'
+            ssh -i ${{ secrets.PRIVATE_SSH_PRIVATE_KEY }} -L ${{ secrets.JUMP_PORT }}:${{ secrets.PRIVATE_HOST }}:${{ secrets.PRIVATE_PORT }} ${{ secrets.PRIVATE_USERNAME }}@${{ secrets.PRIVATE_HOST }} -p ${{ secrets.PRIVATE_PORT }}
