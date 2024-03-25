@@ -16,14 +16,15 @@ jobs:
     - name: Install dependencies
       run: npm install
       
-    - name: Deploy to Private Server
+    - name: Connect to Bastion Host
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}             
-        username: ${{ secrets.EC2_USERNAME }} 
-        key: ${{ secrets.SSH_PRIVATE_KEY }}   
+        host: ${{ secrets.BASTION_HOST }}
+        username: ${{ secrets.BASTION_USERNAME }}
+        key: ${{ secrets.BASTION_SSH_KEY }}
         script: |
-          cd /var/www/html/Node-Mangod-PrivateD  
-          git pull origin main                  
-          npm install                            
-          npm start                       
+          ssh -N -L 2222:${{ secrets.HOST }}:22 ${{ secrets.BASTION_USERNAME }}@${{ secrets.BASTION_HOST }} &
+          sleep 5 # wait for tunnel to establish
+
+    - name: Deploy to Private Server
+      run: ssh -p 2222 ${{ secrets.EC2_USERNAME }}@localhost "cd /var/www/html/Node-Mangod-PrivateD && git pull origin main && npm install && npm start"
