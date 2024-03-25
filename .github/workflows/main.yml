@@ -9,8 +9,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' # Change 'development' to 'main' if that's your main branch
-
+    if: github.ref == 'refs/heads/main' 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -27,4 +26,3 @@ jobs:
           script: |
             cd /var/www/html/Node-Mangod-PrivateD
             git pull origin main 
-            npm install 
