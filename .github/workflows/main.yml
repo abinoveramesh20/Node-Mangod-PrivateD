@@ -1,30 +1,34 @@
-name: Deploy to Private Server
+name: CICD
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   deploy:
+    name: Deploy 
     runs-on: ubuntu-latest
-    
+    if: github.ref == 'refs/heads/main'
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    
-    - name: Install dependencies
-      run: npm install
+      - uses: actions/checkout@v2
+      
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' # Specify the desired Node.js version
+        
+      - name: Install dependencies
+        run: npm install
 
-    - name: Connect to Bastion Host
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.BASTION_HOST }}
-        username: ${{ secrets.BASTION_USERNAME }}
-        key: ${{ secrets.BASTION_SSH_KEY }}
-        port: 22 # SSH port of the bastion host
-        scipt: |
-          cd /var/www/html/Node-Mangod-PrivateD 
-          git pull origin main 
-          npm install 
-          npm start"
+      - name: Deploy to development server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: | 
+            cd /var/www/html/Node-Mangod-PrivateD
+            git pull origin main
+            npm install
+        
