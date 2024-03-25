@@ -23,7 +23,7 @@ jobs:
         username: ${{ secrets.BASTION_USERNAME }}
         key: ${{ secrets.BASTION_SSH_KEY }}
         port: 22 # SSH port of the bastion host
-        args: -NL 2222:${{ secrets.PRIVATE_SERVER_HOST }}:22
+        args: -NL 22:${{ secrets.PRIVATE_SERVER_HOST }}:22
 
     - name: Deploy to Private Server
       run: ssh -p 2222 ${{ secrets.PRIVATE_SERVER_USERNAME }}@localhost "cd /var/www/html/Node-Mangod-PrivateD && git pull origin main && npm install && npm start"
