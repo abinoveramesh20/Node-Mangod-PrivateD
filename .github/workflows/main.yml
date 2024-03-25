@@ -25,6 +25,6 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /path/to/your/app
+            cd /var/www/html/Node-Mangod-PrivateD
             git pull origin main 
             npm install 
