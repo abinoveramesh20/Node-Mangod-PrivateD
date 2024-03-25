@@ -17,7 +17,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.EC2_PRIVATE_IP }}
-        username: ec2-user
+        username: ubuntu
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /var/www/html/Node-Mangod-PrivateD
