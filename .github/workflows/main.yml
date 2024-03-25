@@ -1,24 +1,30 @@
-name: Deploy to Server
+name: CICD
 
 on:
   push:
     branches:
-      - main
+      - main # or whatever your main branch name is
 
 jobs:
   deploy:
+    name: Deploy
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' # Change 'development' to 'main' if that's your main branch
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Install SSH key
-      run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-
-    - name: Deploy to server
-      run: |
-        ssh -i ~/.ssh/id_rsa -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "cd /var/www/html/Node-Mangod-PrivateD && git pull origin main"
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: npm install 
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /path/to/your/app
+            git pull origin main 
+            npm install 
