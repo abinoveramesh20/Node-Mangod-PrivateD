@@ -15,10 +15,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14' # Specify the desired Node.js version
-        
-      - name: Install dependencies
-        run: npm install
+          node-version: '18' # Specify the desired Node.js version
 
       - name: Deploy to development server
         uses: appleboy/ssh-action@master
