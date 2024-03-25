@@ -12,10 +12,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Install SSH key
-      run: echo "$SSH_PRIVATE_KEY" > id_rsa && chmod 600 id_rsa
-
     - name: Deploy to server
       run: |
         ssh -i ~/.ssh/id_rsa -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} "cd /var/www/html/Node-Mangod-PrivateD && git pull origin main"
