@@ -19,11 +19,11 @@ jobs:
     - name: Deploy to Private Server
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        host: ${{ secrets.HOST }}             
+        username: ${{ secrets.EC2_USERNAME }} 
+        key: ${{ secrets.SSH_PRIVATE_KEY }}   
         script: |
-          cd /var/www/html/Node-Mangod-PrivateD
-          git pull origin main
-          npm install
-          npm start
+          cd /var/www/html/Node-Mangod-PrivateD  
+          git pull origin main                  
+          npm install                            
+          npm start                       
