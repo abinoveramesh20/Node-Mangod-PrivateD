@@ -19,10 +19,10 @@ jobs:
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.JUMP_HOST }}
-          username: ${{ secrets.JUMP_USERNAME }}
-          port: ${{ secrets.JUMP_PORT }}
-          key: ${{ secrets.JUMP_SSH_PRIVATE_KEY }}
+          host: ${{ secrets.PRIVATE_HOST }}
+          username: ${{ secrets.PRIVATE_USERNAME }}
+          port: ${{ secrets.PRIVATE_PORT }}
+          key: ${{ secrets.PRIVATE_SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/html/Node-Mangod-PrivateD
             git pull origin main
